@@ -1,2 +1,25 @@
+#Build output
 target/
+build/
+out/
+
+#Test reports and outputs
+reports/
+test-output/
+allure-results/
+allure-report/
+*.html
+*.xml
+*.json
+*.txt
+
+#Runtime/log files
+*.log
+*.tmp
+*.lock
+
+.project
+.classpath
+.settings/
+
 
