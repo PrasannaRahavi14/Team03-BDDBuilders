@@ -33,8 +33,14 @@ Scenario:
 Then Admin should see search... placeholder text
 
 @ColumnHeaderName
-Scenario:
-Then Admin should see data table with column header
+Scenario Outline:
+Then Admin should see data table with '<columnheader>' on Manage Program Page
+Examples:
+|columnheader|
+|Program Name|
+|Program Description|
+|Program Status|
+|Edit/Delete|
 
 @CheckboxHeaderState
 Scenario:

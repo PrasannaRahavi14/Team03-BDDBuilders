@@ -25,6 +25,8 @@ public class ProgramPage extends BaseLogger {
 	 private By ManageProgram = By.xpath("//div[contains(text(), ' Manage Program')]");
 	 private By AddNewProgram = By.xpath("//button[contains(text(), 'Add New Program')]");
 	 private By LeftDeletebutton = By.xpath("//button[@class='p-button-danger p-button p-component p-button-icon-only']");
+	 private By SearchBox = By.xpath("//input[@id='filterGlobal']");
+	 private By SearchPlaceholder = By.xpath("//input[@placeholder='Search...']");
 	 
 	 public ProgramPage(WebDriver driver) {
 	        this.driver = driver;
@@ -82,4 +84,17 @@ public class ProgramPage extends BaseLogger {
 	 {
 		 return elementsUtil.isElementDisplayed(LeftDeletebutton);
 	 }
+	 
+	 public boolean isSearchBoxDisplay()
+	 {
+	     return elementsUtil.isElementDisplayed(SearchBox);
+	 }
+	 
+	 public boolean Searchplaceholdertext()
+	 {
+		 return elementsUtil.isElementDisplayed(SearchPlaceholder);
+	 }
+
+	
 }
+
