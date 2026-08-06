@@ -1,2 +1,32 @@
+# ===== Build output =====
 target/
+build/
+out/
 
+# ===== Eclipse IDE files =====
+.project
+.classpath
+.settings/
+.metadata/
+
+# ===== IntelliJ IDEA files =====
+.idea/
+*.iml
+
+# ===== Test reports and outputs =====
+test-output/
+reports/
+allure-results/
+allure-report/
+
+# ===== Runtime/log files =====
+*.log
+*.tmp
+*.lock
+
+# ===== OS-generated files =====
+.DS_Store
+Thumbs.db
+
+# ===== Compiled class files =====
+*.class
