@@ -4,14 +4,10 @@ build/
 out/
 
 #Test reports and outputs
-reports/
 test-output/
+reports/
 allure-results/
 allure-report/
-*.html
-*.xml
-*.json
-*.txt
 
 #Runtime/log files
 *.log
@@ -21,5 +17,8 @@ allure-report/
 .project
 .classpath
 .settings/
+.metadata/
+
+*.class
 
 
