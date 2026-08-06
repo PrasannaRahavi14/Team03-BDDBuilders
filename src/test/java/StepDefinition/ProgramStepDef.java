@@ -54,26 +54,32 @@ public class ProgramStepDef extends BaseLogger {
 
 	@Then("Admin should see manage program heading aligned on the left side")
 	public void admin_should_see_manage_program_heading_aligned_on_the_left_side() {
-	    //boolean isLeftAligned = programpage.isManageProgramLeftAligned();
-	    //Assert.assertTrue(isLeftAligned);
-		Assert.assertTrue(programpage.isManageProgramLeftAligned(),"Manage Program Heading is not left aligned"); 
+	    boolean isLeftAligned = programpage.isManageProgramLeftAligned();
+	    Assert.assertTrue(isLeftAligned);
+	    log.info("Manage Program Heading is LeftAligned  : "+ isLeftAligned);
 	}
 
 	@Then("Admin should see a Delete button in left top is disabled")
 	public void admin_should_see_a_delete_button_in_left_top_is_disabled() {
-	    
+		boolean isDeletebuttondisabled = programpage.isDeletebuttonLeftDisabled();
+	    Assert.assertTrue(isDeletebuttondisabled);
+	    log.info("Delete Button on top left is disabled : "+ isDeletebuttondisabled);
 	    
 	}
 
 	@Then("Admin should see Search bar")
 	public void admin_should_see_search_bar() {
-	    
+		boolean isSearchBardisplayed = programpage.isSearchBoxDisplay();
+	    Assert.assertTrue(isSearchBardisplayed);
+	    log.info("Search Bar is displayed : "+ isSearchBardisplayed);
 	    
 	}
 
 	@Then("Admin should see search... placeholder text")
 	public void admin_should_see_search_placeholder_text() {
-	    
+		boolean isSearchplaceholderdisplayed = programpage.Searchplaceholdertext();
+	    Assert.assertTrue(isSearchplaceholderdisplayed);
+	    log.info("Search PlaceHolder is displayed : "+ isSearchplaceholderdisplayed);
 	    
 	}
 
