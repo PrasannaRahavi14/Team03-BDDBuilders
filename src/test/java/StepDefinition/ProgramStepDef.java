@@ -83,9 +83,8 @@ public class ProgramStepDef extends BaseLogger {
 	    
 	}
 
-	@Then("Admin should see data table with column header")
-	public void admin_should_see_data_table_with_column_header() {
-	    
+	@Then("Admin should see data table with {string} on Manage Program Page")
+	public void admin_should_see_data_table_with_on_manage_program_page(String string) {
 	    
 	}
 

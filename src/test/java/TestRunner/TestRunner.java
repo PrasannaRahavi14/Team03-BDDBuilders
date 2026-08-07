@@ -13,7 +13,7 @@ import io.cucumber.testng.CucumberOptions;
 			        "json:target/cucumber.json", // JSON report for integrations
 			        "junit:target/Cucumber.xml", // JUnit XML report
 			        "io.qameta.allure.cucumber7jvm.AllureCucumber7Jvm", // Allure integration
-			        "com.aventstack.extentreports.cucumber.adapter.ExtentCucumberAdapter" // Extent report
+			        "com.aventstack.extentreports.cucumber.adapter.ExtentCucumberAdapter:target/extent-report" // Extent report
 					},
 	        monochrome = false
 	        
