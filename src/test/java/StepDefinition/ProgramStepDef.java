@@ -84,26 +84,24 @@ public class ProgramStepDef extends BaseLogger {
 	}
 
 	@Then("Admin should see data table with {string} on Manage Program Page")
-	public void admin_should_see_data_table_with_on_manage_program_page(String string) {
-	    
+	public void admin_should_see_data_table_with_on_manage_program_page(String ExpectedColumnHeading) {
+		String ActualColumnHeading = programpage.GetDataTableHeader(ExpectedColumnHeading);
+	    Assert.assertEquals(ExpectedColumnHeading, ActualColumnHeading);
+		log.info("Expected Heading is : "+ActualColumnHeading);
 	}
 
 	@Then("Admin should see checkbox default state as unchecked beside Program Name column header")
 	public void admin_should_see_checkbox_default_state_as_unchecked_beside_program_name_column_header() {
-	    
-	    
-	}
-
-	@Then("Admin should see check box default state as unchecked on the left side in all rows against program name")
-	public void admin_should_see_check_box_default_state_as_unchecked_on_the_left_side_in_all_rows_against_program_name() {
-	    
-	    
+	    boolean isProgramHeaderCheckboxdisplayed = programpage.isProgramNameCheckboxUnchecked();
+	    Assert.assertTrue(isProgramHeaderCheckboxdisplayed);
+	    log.info("Program Header Checkbox is in default state as unchecked : "+ isProgramHeaderCheckboxdisplayed);
 	}
 
 	@Then("Admin should see the sort arrow icon beside to each column header except Edit and Delete")
 	public void admin_should_see_the_sort_arrow_icon_beside_to_each_column_header_except_edit_and_delete() {
-	    
-	    
+		boolean isSortIconDisplayed = programpage.isSortIconPresent();
+	  Assert.assertTrue(isSortIconDisplayed);
+      log.info("Sort Icon is Present : "+ isSortIconDisplayed);
 	}
 
 	@Then("Admin should see the Edit and Delete buttons on each row of the data table")
