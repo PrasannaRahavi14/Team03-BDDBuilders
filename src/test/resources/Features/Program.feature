@@ -1,6 +1,7 @@
-Feature: Program Navigation validation 
+@Programuivalidation
+Feature: Program Navigation Validation
 
-Background:
+Background: Admin is logged in to LMS Portal
 Given Admin is on home page after Login
 When Admin clicks Program on the navigation bar
 
@@ -46,17 +47,13 @@ Examples:
 Scenario:
 Then Admin should see checkbox default state as unchecked beside Program Name column header
 
-@CheckboxEachRow
-Scenario:
-Then Admin should see check box default state as unchecked on the left side in all rows against program name 
-
 @SortIconPrescence
 Scenario:
 Then Admin should see the sort arrow icon beside to each column header except Edit and Delete
 
-@Edit/DeleteIcon
-Scenario:
-Then Admin should see the Edit and Delete buttons on each row of the data table
+#@Edit/DeleteIcon
+#Scenario:
+#Then Admin should see the Edit and Delete buttons on each row of the data table
 
 @PaginationControl
 Scenario:

@@ -7,15 +7,16 @@ import io.cucumber.testng.CucumberOptions;
 
 @CucumberOptions(
 	        features = "src/test/resources/Features",
-	        glue = {"StepDefinition"},
+	        glue = {"StepDefinition", "Hooks"},
 	        plugin = { "pretty", // Enhanced readable console logs
 			        "html:target/cucumber-Reports.html", // HTML report
 			        "json:target/cucumber.json", // JSON report for integrations
 			        "junit:target/Cucumber.xml", // JUnit XML report
 			        "io.qameta.allure.cucumber7jvm.AllureCucumber7Jvm", // Allure integration
-			        "com.aventstack.extentreports.cucumber.adapter.ExtentCucumberAdapter:target/extent-report" // Extent report
+			        //"com.aventstack.extentreports.cucumber.adapter.ExtentCucumberAdapter:target/extent-report" // Extent report
 					},
-	        monochrome = false
+	        monochrome = true
+	        //tags = "@SubMenuDisplay"
 	        
 	)
 	public class TestRunner extends AbstractTestNGCucumberTests  {

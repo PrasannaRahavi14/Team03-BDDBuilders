@@ -6,7 +6,7 @@ import java.io.IOException;
 import java.util.Properties;
 
 public class ConfigReader {
-	private static Properties prop;
+    private static Properties prop;
 
     public Properties init_prop() {
         prop = new Properties();

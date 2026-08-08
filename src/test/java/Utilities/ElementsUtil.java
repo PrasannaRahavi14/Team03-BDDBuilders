@@ -1,6 +1,7 @@
 package Utilities;
 
 import java.time.Duration;
+import java.util.List;
 
 import org.openqa.selenium.*;
 import org.openqa.selenium.support.ui.ExpectedConditions;
@@ -59,4 +60,16 @@ public class ElementsUtil {
         Alert alert = waitForAlertSafe();
         if (alert != null) alert.accept();
     }
+   
+    public List<WebElement> waitForElementsToBeVisible(By locator) {
+        return wait.until(
+            ExpectedConditions.visibilityOfAllElementsLocatedBy(locator)
+        );
+    }
+
+	public List<WebElement> waitForElementsToBeVisible(List<WebElement> locator) {
+		 return wait.until(
+		            ExpectedConditions.visibilityOfAllElements(locator));
+	}
+    
 }
