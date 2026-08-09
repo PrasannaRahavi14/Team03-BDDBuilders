@@ -57,7 +57,13 @@ Then Admin should see the sort arrow icon beside to each column header except Ed
 
 @PaginationControl
 Scenario:
-Then Admin should see the text as "Showing x to y of z entries" along with Pagination controls below the table.
+Then Admin should see the following pagination controls below the table:
+  | Showing x to y of z entries |
+  | Double Left Icon            |
+  | Single Left Icon            |
+  | Pagination Pages            |
+  | Single Right Icon           |
+  | Double Right Icon           |
 
 @FooterMessage
 Scenario:

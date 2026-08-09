@@ -1,12 +1,13 @@
+@AddNewProgram
 Feature: Add New Program UI validation 
 
-Background:
+Background: Admin is on Program Page after login
 Given Admin is on Program Page
-When Admin clicks on "Add New Program" under the "Program" menu bar
+When Admin clicks on Add New Program under the Program menu bar
 
 @ProgramPopupDisplay
 Scenario:
-Then Admin should see Program Details dialog
+Then Admin should see Program Details dialog box
 
 @ProgramDetailTitle
 Scenario:
