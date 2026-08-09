@@ -49,6 +49,11 @@ public class ElementsUtil {
             return null;
         }
     }
+    
+    public String getAttribute(By locator, String attribute) {
+        WebElement element = waitForElementToBeVisible(locator);
+        return element.getAttribute(attribute);
+    }
 
     public String getAlertTextSafe() {
         Alert alert = waitForAlertSafe();

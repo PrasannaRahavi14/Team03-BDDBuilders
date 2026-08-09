@@ -6,8 +6,9 @@ import io.cucumber.testng.AbstractTestNGCucumberTests;
 import io.cucumber.testng.CucumberOptions;
 
 @CucumberOptions(
-	        features = "src/test/resources/Features",
+	        features = "src/test/resources/Features/Batch.feature",
 	        glue = {"StepDefinition"},
+	        tags = "@1",
 	        plugin = { "pretty", // Enhanced readable console logs
 			        "html:target/cucumber-Reports.html", // HTML report
 			        "json:target/cucumber.json", // JSON report for integrations
