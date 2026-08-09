@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
 import java.util.Properties;
 
 import org.apache.logging.log4j.Logger;
@@ -71,10 +72,15 @@ public class Hooks {
                 destDir.mkdirs();
             }
 
-            String fileName = scenario.getName().replaceAll("[^a-zA-Z0-9_-]", "_") + ".png";
+            String rawName = scenario.getName();
+            if (rawName == null || rawName.trim().isEmpty()) {
+                rawName = "unnamed_scenario";
+            }
+            
+            String fileName = rawName.replaceAll("[^a-zA-Z0-9_-]", "_")
+                    + "_" + System.currentTimeMillis() + ".png";
             File destFile = new File(destDir, fileName);
-            Files.copy(srcFile.toPath(), destFile.toPath());
-            System.out.println("Screenshot saved at: " + destFile.getAbsolutePath());
+            Files.copy(srcFile.toPath(), destFile.toPath(), StandardCopyOption.REPLACE_EXISTING);
 
             // Attach to Cucumber report (optional)
             byte[] fileContent = Files.readAllBytes(destFile.toPath());

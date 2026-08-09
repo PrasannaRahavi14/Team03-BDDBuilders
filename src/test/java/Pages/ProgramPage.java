@@ -2,6 +2,7 @@ package Pages;
 
 
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -45,7 +46,9 @@ public class ProgramPage extends BaseLogger {
 	 private By PaginationPages = By.xpath("//span[@class= 'p-paginator-pages ng-star-inserted']");
 	 private By PaginationSingleRightIcon = By.xpath("//span[@class= 'p-paginator-icon pi pi-angle-right']");
 	 private By PaginationDoubleRightIcon = By.xpath("//span[@class= 'p-paginator-icon pi pi-angle-double-right']");
-	 
+	 private By FooterText = By.xpath("//div[contains(text(),'programs')]");
+	 private By ProgramDetailsDialogBox = By.xpath("//span[contains(@class,'p-dialog-header')]");
+	 private By ProgramDetailsText = By.xpath("//span[contains(text(), 'Program Details')]");
 	 
 	 public ProgramPage(WebDriver driver) {
 	        this.driver = driver;
@@ -171,14 +174,91 @@ public class ProgramPage extends BaseLogger {
 		 boolean isProgramStatusIconPresent = ProgramStatusSortIcon != null && !ProgramStausIcon.isEmpty();
 		 log.info("Sort icon besdie Program Status is present: {}", isProgramStatusIconPresent);
 		 
-         return isProgramNameIconPresent && isProgramDescriptionIconPresent && isProgramStatusIconPresent;
-         
+         return isProgramNameIconPresent && isProgramDescriptionIconPresent && isProgramStatusIconPresent;       
 	 }	 
 	 
+	 public String GetPaginationControl(String Controls)
+	 {       String SwitchKey = Controls;
+	         if(Controls.matches("(?i)Showing x to y of z entries")) {
+	         SwitchKey = "Showing Entries";
+	     }
+	     switch(SwitchKey.toLowerCase())
+	     {
+	         case "showing entries":
+	             String ActualText = elementsUtil.doGetText(Paginationshowingentries);
+	             log.info("Admin is able to see the pagination text as : " + ActualText);
+	             break;
+
+	         case "double left icon":
+	             elementsUtil.isElementDisplayed(PaginationDoubleLeftIcon);
+	             log.info("Admin is able to see the pagination control as : " + Controls);
+	             break;
+
+	         case "single left icon":
+	             elementsUtil.isElementDisplayed(PaginationSingleLeftIcon);
+	             log.info("Admin is able to see the pagination control as : " + Controls);
+	             break;
+
+	         case "pagination pages":
+	             elementsUtil.isElementDisplayed(PaginationPages);
+	             log.info("Admin is able to see the pagination control as : " + Controls);
+	             break;
+
+	         case "single right icon":
+	             elementsUtil.isElementDisplayed(PaginationSingleRightIcon);
+	             log.info("Admin is able to see the pagination control as : " + Controls);
+	             break;
+
+	         case "double right icon":
+	             elementsUtil.isElementDisplayed(PaginationDoubleRightIcon);
+	             log.info("Admin is able to see the pagination control as : " + Controls);
+	             break;
+
+	         default:
+	             System.out.println("Unknown Pagination Control : " + Controls);
+	             log.info("Unknown Pagination Control : " + Controls);
+	             break;
+	     }
+	     return Controls;
+	 }
 	 
+	 public List<String> GetPaginationControls(List<String> controls) {
+
+		    List<String> actualControls = new ArrayList<>();
+
+		    for (String control : controls) {
+		        String actualControl = GetPaginationControl(control);
+		        actualControls.add(actualControl);
+		    }
+
+		    return actualControls;
+		}
 	 
+	 public String getFooter()
+	 {
+		 return elementsUtil.doGetText(FooterText);
+	 }
 	 
+	 public void ClickAddNewProgram()
+	 {
+		 elementsUtil.doClick(AddNewProgram);
+	 }
+	 public String GetProgramDetailsText()
+	 {
+		return elementsUtil.doGetText(ProgramDetailsText);
+		 
+	 }
+	 
+	 public boolean isProgramDetailsDiaplogBoxDisplayed()
+	 {
+		 return elementsUtil.isElementDisplayed(ProgramDetailsDialogBox);
+	 }
+
 }
+	 
+	 
+	 
+
 
 	 
 
