@@ -161,20 +161,25 @@ public class ProgramStepDef extends BaseLogger {
 	}
 
 	@Then("Admin should see red  asterisk mark beside mandatory field {string}")
-	public void admin_should_see_red_asterisk_mark_beside_mandatory_field(String string) {
-	    
+	public void admin_should_see_red_asterisk_mark_beside_mandatory_field(String fieldName) {
+		boolean isDisplayed = programpage.isRedAsterikdisplayed(fieldName);
+	    Assert.assertTrue(isDisplayed, "Red asterisk not displayed for mandatory field: " + fieldName);
+	    log.info("Verified mandatory asterisk for field: " + fieldName);
 	    
 	}
 
 	@Then("Admin should see the {string}")
-	public void admin_should_see_the(String string) {
-	    
-	    
+	public void admin_should_see_the(String FieldTextBox) {
+		boolean isDisplayed = programpage.isTextBoxDisplayed(FieldTextBox);
+	    Assert.assertTrue(isDisplayed, "Input Text Box is not avaialble : " + FieldTextBox);
+	    log.info("Admin is able to see : " + FieldTextBox);
 	}
 
 	@Then("Admin should see {string} radio buttons")
-	public void admin_should_see_radio_buttons(String string) {
-	    
+	public void admin_should_see_radio_buttons(String Options) {
+		boolean isDisplayed = programpage.isRadioButtonDisplayed(Options);
+	    Assert.assertTrue(isDisplayed, "Radio button not displayed: " + Options);
+	    log.info("Verified radio button is displayed: " + Options);
 	    
 	}
 }
