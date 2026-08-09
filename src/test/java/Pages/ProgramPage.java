@@ -49,6 +49,12 @@ public class ProgramPage extends BaseLogger {
 	 private By FooterText = By.xpath("//div[contains(text(),'programs')]");
 	 private By ProgramDetailsDialogBox = By.xpath("//span[contains(@class,'p-dialog-header')]");
 	 private By ProgramDetailsText = By.xpath("//span[contains(text(), 'Program Details')]");
+	 private By RedAsterikName = By.xpath("//label[contains(text(), 'Name')]//span[contains(@style,'color: red')]");
+	 private By RedAsterikStatus = By.xpath("//lable[contains(text(), 'Status')]//span[contains(@style,'color: red')]");
+	 private By ActiveRadioButton = By.xpath("//p-radiobutton/parent::div[contains(., 'Active')]");
+	 private By InactiveRadioButton = By.xpath("//p-radiobutton/parent::div[contains(., ' Inactive ')]");
+	 private By NameTextBox = By.xpath("//input[@id = 'programName']");
+	 private By DescriptionTextBox = By.xpath("//input[@id = 'programDescription']");
 	 
 	 public ProgramPage(WebDriver driver) {
 	        this.driver = driver;
@@ -215,7 +221,6 @@ public class ProgramPage extends BaseLogger {
 	             break;
 
 	         default:
-	             System.out.println("Unknown Pagination Control : " + Controls);
 	             log.info("Unknown Pagination Control : " + Controls);
 	             break;
 	     }
@@ -253,7 +258,61 @@ public class ProgramPage extends BaseLogger {
 	 {
 		 return elementsUtil.isElementDisplayed(ProgramDetailsDialogBox);
 	 }
+	 
 
+	 public By getRedAsteriskXPath(String fieldName) {
+		    Map<String, By> fieldToXPath = new HashMap<>();
+		    fieldToXPath.put("Name", RedAsterikName);
+		    fieldToXPath.put("Status", RedAsterikStatus);
+
+		    if (!fieldToXPath.containsKey(fieldName)) {
+		        throw new IllegalArgumentException("No XPath mapped for mandatory field: " + fieldName);
+		    }
+
+		    return fieldToXPath.get(fieldName);
+		}
+
+		public boolean isRedAsterikdisplayed(String fieldName) {
+		    By locator = getRedAsteriskXPath(fieldName);
+		    boolean isDisplayed = elementsUtil.isElementDisplayed(locator);
+		    log.info("Mandatory Red Asterisk displayed for " + fieldName + ": " + isDisplayed);
+		    return isDisplayed;
+		}
+
+		public By getRadioButtonoption(String radioMap) {
+		    Map<String, By> optionToXPath = new HashMap<>();
+		    optionToXPath.put("Active", ActiveRadioButton);
+		    optionToXPath.put("Inactive", InactiveRadioButton);
+		    if (!optionToXPath.containsKey(radioMap)) {
+		        throw new IllegalArgumentException("No XPath mapped for radio button option: " + radioMap);
+		    }
+		    return optionToXPath.get(radioMap);
+		}
+
+		public boolean isRadioButtonDisplayed(String option) {
+		    By locator = getRadioButtonoption(option);
+		    boolean isDisplayed = elementsUtil.isElementDisplayed(locator);
+		    log.info("Admin is able to see the " + option + " radio button: " + isDisplayed);
+		    return isDisplayed;
+		}
+		
+		private By isInputTextBoxavailable(String fieldTextBoxOption) {
+		    switch (fieldTextBoxOption.toLowerCase()) {
+		        case "nametextbox":
+		            return NameTextBox;          
+		        case "descriptiontextbox":
+		            return DescriptionTextBox;
+		        default:
+		            throw new IllegalArgumentException("No XPath mapped for Text Box option: " + fieldTextBoxOption);
+		    }
+		}
+
+		public boolean isTextBoxDisplayed(String fieldTextBox) {
+		    By locator = isInputTextBoxavailable(fieldTextBox);
+		    boolean isDisplayed = elementsUtil.isElementDisplayed(locator);
+		    log.info("Admin is able to see : " + fieldTextBox + " is displayed: " + isDisplayed);
+		    return isDisplayed;
+		}
 }
 	 
 	 
