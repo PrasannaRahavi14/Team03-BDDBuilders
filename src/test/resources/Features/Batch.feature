@@ -1,4 +1,3 @@
-@11
 Feature: Batch Page Functionality
 
 Background:
@@ -20,14 +19,6 @@ Examples:
 | Icons |
 | Delete Icon |
 | Pagination Controls |
-
-#Scenario Outline: Icons are displayed on the manage batch page in each row
-#Then "<Rowicons>" should be displayed in each rom
-Examples:
-#| Rowicons |
-#| Edit |
-#| Delete |
-#| Checkbox |
 
 Scenario: Edit icon is displayed
 Then "Edit icon" should be displayed in each rom
@@ -63,7 +54,7 @@ Examples:
 | Batch Name |
 | Number of Classes  |
 | Status :  |
-#| Description |
+
 
 Scenario: Program name with dropdown is displayed
 When Admin clicks on Add New batch under the Batch tab
@@ -77,26 +68,6 @@ Scenario: Program name appears as batch prefix
 Given Admin is on Batch Details dialog box
 When Admin selects program name present in the dropdown
 Then Admin should see selected program name in the batch name prefix box
-#try excel reader
-#Scenario: Batch name suffix accepts only numbers
-#Given Admin is on Batch Details dialog box
-#When Admin enters "alphabets" in batch name suffix box
-#Then Admin should get error message below the text box of respective field
-
-#Scenario: Batch name Prefix cannot be edited
-#Given Admin is on Batch Details dialog box
-#When Admin enters alphabets in batch name prefix box
-#Then Admin should see empty text box
-
-#Scenario: Add new batch only with mandatory fields
-#Given Admin is on Batch Details dialog box
-#When Admin enters the data only to the mandatory fields "Python" "1" "Python Coding" "6" and clicks save button
-#Then Admin should get a successful message "Batch Created Successfully" 
-
-#Scenario:
-#Given Admin is on Batch Details dialog box
-#When Add new batch with leaving space in mandatory field "Python" " " "Python Coding" "6" and clicks save button
-#Then Admin should get a error message on the respective mandatory field "Batch Name is required."
 
 Scenario:Cancel Button functionality
 Given Admin is on Batch Details dialog box
