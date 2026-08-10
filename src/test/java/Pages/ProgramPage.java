@@ -15,6 +15,7 @@ import DriverFactory.DriverFactory;
 import Utilities.BaseLogger;
 import Utilities.ConfigReader;
 import Utilities.ElementsUtil;
+import Utilities.ExcelReader;
 
 public class ProgramPage extends BaseLogger {
 	WebDriver driver = DriverFactory.getDriver();
@@ -55,6 +56,15 @@ public class ProgramPage extends BaseLogger {
 	 private By InactiveRadioButton = By.xpath("//p-radiobutton/parent::div[contains(., ' Inactive ')]");
 	 private By NameTextBox = By.xpath("//input[@id = 'programName']");
 	 private By DescriptionTextBox = By.xpath("//input[@id = 'programDescription']");
+	 private By SaveButton = By.xpath("//button[@id = 'saveProgram']");
+	 private By MandatoryRequiredNameMessage = By.xpath("//small[contains(text(), 'Program name is required.')]");
+	 private By MandatoryRequiredStatusMessage =  By.xpath("//small[contains(text(), 'Status is required.')]");
+	 private By CancelButton = By.xpath("//span[contains(text(), 'Cancel')]");
+	 private By XIcon = By.xpath("//span[contains(@class,'p-dialog-header-close-icon') and contains(@class,'pi-times')]");
+	 String filepath = ConfigReader.getProperty("TestData");
+	 private By Successprogrammessage = By.xpath("//div[contains(text(), 'Program Created Successfully')]");
+	 
+	 
 	 
 	 public ProgramPage(WebDriver driver) {
 	        this.driver = driver;
@@ -313,6 +323,65 @@ public class ProgramPage extends BaseLogger {
 		    log.info("Admin is able to see : " + fieldTextBox + " is displayed: " + isDisplayed);
 		    return isDisplayed;
 		}
+		
+		public void OnClickSaveButton()
+		{
+			elementsUtil.doClick(SaveButton);
+		}
+		
+		private By isMandatoryRequiredMessageDisplay(String Field)
+		{
+			switch (Field.toLowerCase()) {
+	        case "program name":
+	            return MandatoryRequiredNameMessage;          
+	        case "status":
+	            return MandatoryRequiredStatusMessage;
+	        default:
+	            throw new IllegalArgumentException("No XPath mapped for Text Box option: " + Field);
+	      }
+		}
+		
+		public boolean isRequiredMessageDisplayed(String fieldmessage) {
+		    By locator = isMandatoryRequiredMessageDisplay(fieldmessage);
+		    boolean isDisplayed = elementsUtil.isElementDisplayed(locator);
+		    log.info("Admin is able to see : " + fieldmessage + " is displayed: " + isDisplayed);
+		    return isDisplayed;
+		}
+		
+		public void OnClickCancelButton()
+		{
+			elementsUtil.doClick(CancelButton);
+		}
+		
+		public boolean isProgramDetailsDialogDisappeared() { 
+		return elementsUtil.isElementDisplayed(ProgramDetailsDialogBox);
+		
+		}
+		
+		public void OnClickXIcon()
+		{
+			elementsUtil.waitForElementToBeClickable(XIcon);
+		}
+		
+		public void getValidProgramDetails()
+		{
+			log.info("Performing Register with TestData from Excel:");
+	     	Map<String, String> ProgramData = ExcelReader.getRowByTestCaseId(filepath, "AddNewProgram", "ValidMandatoryDetails");
+	     	String ExcelDataName = ProgramData.get("Name");
+	     	String ExcelDataDescription = ProgramData.get("Description");
+	     	driver.findElement(NameTextBox).sendKeys(ExcelDataName);
+	     	driver.findElement(DescriptionTextBox).sendKeys(ExcelDataDescription);
+	     	driver.findElement(ActiveRadioButton).isSelected();
+	     	driver.findElement(SaveButton).click();
+	     	log.info("Name : " + ExcelDataName);
+	     	log.info("Description : " + ExcelDataDescription);
+		}
+		
+		public String isSuccessProgramMessageDisplay()
+		{
+			return elementsUtil.waitForVisibilityAndGetText(Successprogrammessage);
+		}
+
 }
 	 
 	 

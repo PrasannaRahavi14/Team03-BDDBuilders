@@ -182,5 +182,75 @@ public class ProgramStepDef extends BaseLogger {
 	    log.info("Verified radio button is displayed: " + Options);
 	    
 	}
+	
+	@Given("Admin is on Program details dialog box")
+	public void admin_is_on_program_details_dialog_box() {
+		programpage.DoLogin();
+	    programpage.ClickProgramMenu();
+	    programpage.GetManageProgram();
+	    programpage.AddNewProgramMenu();
+	    programpage.ClickAddNewProgram();
+	    programpage.isProgramDetailsDiaplogBoxDisplayed();
+	    
+	}
+
+	@When("Admin clicks save button without entering mandatory")
+	public void admin_clicks_save_button_without_entering_mandatory() {
+	    programpage.OnClickSaveButton();
+	    
+	}
+
+	@Then("Admin gets message {string} is required")
+	public void admin_gets_message_is_required(String FieldMessage) { 
+		boolean isDisplayed = programpage.isRequiredMessageDisplayed(FieldMessage);
+	    Assert.assertTrue(isDisplayed, "Radio button not displayed: " + FieldMessage);
+	    log.info("Mandatory required message is displayed for : " + FieldMessage);
+	}
+
+	@When("Admin clicks Cancel button")
+	public void admin_clicks_cancel_button() {
+	    programpage.OnClickCancelButton();
+	    
+	}
+
+	@Then("Admin can see Program Details form disappears")
+	public void admin_can_see_program_details_form_disappears() {  
+		boolean isDisplayed = programpage.isProgramDetailsDialogDisappeared();
+		Assert.assertTrue(isDisplayed);
+	    log.info("Program Details form disappeared: " + isDisplayed);
+	 
+	}
+
+	@When("Admin clicks X button")
+	public void admin_clicks_x_button() {
+	    programpage.OnClickXIcon();
+	    
+	}
+
+	@When("Admin enter valid details for mandatory fields and Click on save button")
+	public void admin_enter_valid_details_for_mandatory_fields_and_click_on_save_button() {
+	    
+	    programpage.getValidProgramDetails();
+	}
+
+	@Then("Admin gets message {string}")
+	public void admin_gets_message(String ExpectedMessage) {
+		String ActualMessage = programpage.isSuccessProgramMessageDisplay();
+		Assert.assertEquals(ExpectedMessage, ActualMessage);
+	    log.info("Admin can see the message as: " + ActualMessage);
+	    
+	}
+
+	@When("Admin enters a numeric value as the Program Name")
+	public void admin_enters_a_numeric_value_as_the_program_name() {
+	    
+	    
+	}
+
+	@Then("Admin should see error message as {string}")
+	public void admin_should_see_error_message_as(String string) {
+	    
+	    
+	}
 }
 

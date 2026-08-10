@@ -1,3 +1,4 @@
+@AddNewProgramFunctional
 Feature: Add New Program Functional validation 
 
 Background: 
@@ -6,9 +7,9 @@ Given Admin is on Program details dialog box
 @EmptyFormSubmission
 Scenario Outline:
 When Admin clicks save button without entering mandatory
-Then Admin gets message '<field>' is required
+Then Admin gets message '<fieldmessage>' is required
 Examples:
-|field|
+|fieldmessage|
 |Program name|
 |Status|
 

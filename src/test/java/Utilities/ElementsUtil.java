@@ -76,5 +76,17 @@ public class ElementsUtil {
 		 return wait.until(
 		            ExpectedConditions.visibilityOfAllElements(locator));
 	}
-    
+
+	 public boolean waitForInvisibility(By locator) {
+	        try {
+	        	return waitForInvisibility(locator);
+	        } catch (TimeoutException e) {
+	            return false;
+	        }
+	    }
+
+	 public String waitForVisibilityAndGetText(By locator) {
+		    WebElement element = wait.until(ExpectedConditions.visibilityOfElementLocated(locator));
+		    return element.getText();
+		}
 }

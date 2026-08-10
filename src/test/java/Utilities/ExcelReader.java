@@ -44,4 +44,14 @@ public class ExcelReader {
         }
         return excelData;
     }
+    // Fetch single row by TestCaseID from a sheet
+    public static Map<String, String> getRowByTestCaseId(String filePath, String sheetName, String testCaseId) {
+        List<Map<String, String>> allData = getData(filePath, sheetName);
+        for (Map<String, String> row : allData) {
+            if (row.get("TestCaseID").equalsIgnoreCase(testCaseId)) {
+                return row;
+            }
+        }
+        return new HashMap<String, String>();
+    }
 }
