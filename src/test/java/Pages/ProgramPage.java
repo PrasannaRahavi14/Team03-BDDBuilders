@@ -62,8 +62,8 @@ public class ProgramPage extends BaseLogger {
 	 private By CancelButton = By.xpath("//span[contains(text(), 'Cancel')]");
 	 private By XIcon = By.xpath("//span[contains(@class,'p-dialog-header-close-icon') and contains(@class,'pi-times')]");
 	 String filepath = ConfigReader.getProperty("TestData");
-	 private By Successprogrammessage = By.xpath("//div[contains(text(), 'Program Created Successfully')]");
-	 
+	 private By Successprogrammessage = By.xpath("//div[contains(., 'Program Created Successfully')]");//By.xpath("//div[contains(text(), 'Program Created Successfully')]");
+	 private By ActiveButton = By.xpath("//p-radiobutton[@ng-reflect-input-id = 'Active']");
 	 
 	 
 	 public ProgramPage(WebDriver driver) {
@@ -109,7 +109,7 @@ public class ProgramPage extends BaseLogger {
 	 {
 		 WebElement ProgramHeading = elementsUtil.waitForElementToBeVisible(ManageProgram);
 		 int heading = ProgramHeading.getLocation().getX();
-		 int Threshold = 500; //Threshold value for the top left alignment
+		 int Threshold = 500; //Threshold value 
 		 if (Threshold<=500) {
 		        log.info("Manage Program heading is left-aligned : " + heading);
 		    } else {
@@ -341,11 +341,20 @@ public class ProgramPage extends BaseLogger {
 	      }
 		}
 		
-		public boolean isRequiredMessageDisplayed(String fieldmessage) {
-		    By locator = isMandatoryRequiredMessageDisplay(fieldmessage);
-		    boolean isDisplayed = elementsUtil.isElementDisplayed(locator);
-		    log.info("Admin is able to see : " + fieldmessage + " is displayed: " + isDisplayed);
-		    return isDisplayed;
+//		public boolean isRequiredMessageDisplayed(String fieldmessage) {
+//		    By locator = isMandatoryRequiredMessageDisplay(fieldmessage);
+//		   // boolean isDisplayed = elementsUtil.isElementDisplayed(locator);
+//		   // log.info("Admin is able to see : " + fieldmessage + " is displayed: " + isDisplayed);
+//		    log.info("Admin is able to see : " + fieldmessage + " "+ isDisplayed);
+//		    return isDisplayed;
+//		}
+		
+		public String isRequiredMessageDisplayed(String fieldmessage)
+		{ 
+			By locator = isMandatoryRequiredMessageDisplay(fieldmessage);
+		    String actualText = elementsUtil.doGetText(locator);
+		    log.info("Admin is able to see : " + fieldmessage + " -> " + actualText);
+		    return actualText;
 		}
 		
 		public void OnClickCancelButton()
@@ -365,13 +374,13 @@ public class ProgramPage extends BaseLogger {
 		
 		public void getValidProgramDetails()
 		{
-			log.info("Performing Register with TestData from Excel:");
+			log.info("Performing AddNewProgram with TestData from Excel:");
 	     	Map<String, String> ProgramData = ExcelReader.getRowByTestCaseId(filepath, "AddNewProgram", "ValidMandatoryDetails");
 	     	String ExcelDataName = ProgramData.get("Name");
 	     	String ExcelDataDescription = ProgramData.get("Description");
 	     	driver.findElement(NameTextBox).sendKeys(ExcelDataName);
 	     	driver.findElement(DescriptionTextBox).sendKeys(ExcelDataDescription);
-	     	driver.findElement(ActiveRadioButton).isSelected();
+	     	driver.findElement(ActiveButton).isSelected();
 	     	driver.findElement(SaveButton).click();
 	     	log.info("Name : " + ExcelDataName);
 	     	log.info("Description : " + ExcelDataDescription);
@@ -379,7 +388,8 @@ public class ProgramPage extends BaseLogger {
 		
 		public String isSuccessProgramMessageDisplay()
 		{
-			return elementsUtil.waitForVisibilityAndGetText(Successprogrammessage);
+			//return elementsUtil.waitForVisibilityAndGetText(Successprogrammessage);
+			return elementsUtil.doGetText(Successprogrammessage);
 		}
 
 }

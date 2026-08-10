@@ -201,10 +201,14 @@ public class ProgramStepDef extends BaseLogger {
 	}
 
 	@Then("Admin gets message {string} is required")
-	public void admin_gets_message_is_required(String FieldMessage) { 
-		boolean isDisplayed = programpage.isRequiredMessageDisplayed(FieldMessage);
-	    Assert.assertTrue(isDisplayed, "Radio button not displayed: " + FieldMessage);
-	    log.info("Mandatory required message is displayed for : " + FieldMessage);
+	public void admin_gets_message_is_required(String actualText) { 
+//		boolean isDisplayed = programpage.isRequiredMessageDisplayed(FieldMessage);
+//	    Assert.assertTrue(isDisplayed, "Radio button not displayed: " + FieldMessage);
+//	    log.info("Mandatory required message is displayed for : " + FieldMessage);
+		String actualMessage = programpage.isRequiredMessageDisplayed(actualText);
+	    Assert.assertEquals(actualMessage.trim(), actualText,
+	        "Mandatory message mismatch. Expected: [" + actualText + "] but found: [" + actualMessage + "]");
+	    log.info("Mandatory required message is displayed for : " + actualText);
 	}
 
 	@When("Admin clicks Cancel button")
