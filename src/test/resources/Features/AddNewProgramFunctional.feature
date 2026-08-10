@@ -7,7 +7,7 @@ Given Admin is on Program details dialog box
 @EmptyFormSubmission
 Scenario Outline:
 When Admin clicks save button without entering mandatory
-Then Admin gets message '<fieldmessage>' is required
+Then Admin gets message "<fieldmessage>" is required
 Examples:
 |fieldmessage|
 |Program name|
