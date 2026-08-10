@@ -22,6 +22,6 @@ allure-report/
 
 *.class
 
-src/test/resources/TestData/
+src/test/resources/TestData/*.xlsx
 
 
