@@ -38,13 +38,20 @@ public class Hooks {
 
     @Before(order = 1)
     public void launchBrowser() {
+
         String browserName = DriverFactory.getBrowser();
+
         if (browserName == null || browserName.isEmpty()) {
-            browserName = prop.getProperty("browser");
+            throw new IllegalStateException(
+                "Browser parameter was not passed from TestNG."
+            );
         }
+
         driverFactory = new DriverFactory();
         driver = driverFactory.init_driver(browserName);
-        log.info("Browser launched: " + browserName + " | Thread: " + Thread.currentThread().getId());
+
+        log.info("Browser launched: " + browserName
+                + " | Thread: " + Thread.currentThread().getId());
     }
 
     @Before(order = 2)
