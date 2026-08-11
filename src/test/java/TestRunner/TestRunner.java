@@ -2,6 +2,7 @@ package TestRunner;
 
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.DataProvider;
+import org.testng.annotations.Optional;
 import org.testng.annotations.Parameters;
 
 import DriverFactory.DriverFactory;
@@ -25,7 +26,7 @@ public class TestRunner extends AbstractTestNGCucumberTests {
 
     @BeforeClass
     @Parameters("browser")
-    public void setupBrowser(String browser) {
+    public void setupBrowser(@Optional ("chrome") String browser) {
 
         DriverFactory.setBrowser(browser);
 
