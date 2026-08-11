@@ -89,4 +89,9 @@ public class ElementsUtil {
 		    WebElement element = wait.until(ExpectedConditions.visibilityOfElementLocated(locator));
 		    return element.getText();
 		}
+
+	 public void waitForElementToBeClickable(WebElement locator) {
+		 return;
+		
+	 }
 }
