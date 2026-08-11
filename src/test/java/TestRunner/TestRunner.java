@@ -11,6 +11,7 @@ import io.cucumber.testng.CucumberOptions;
 @CucumberOptions(
     features = "src/test/resources/Features/Batch.feature",
     glue = {"StepDefinition", "Hooks"},
+    //tags = "@excel",
     plugin = {
         "pretty",
         "html:target/cucumber-Reports.html",

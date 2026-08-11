@@ -2,7 +2,6 @@ package StepDefinition;
 
 import org.openqa.selenium.WebDriver;
 import org.testng.Assert;
-
 import DriverFactory.DriverFactory;
 import Pages.ProgramPage;
 import Pages.BatchPage;
@@ -119,14 +118,18 @@ public class BatchStepDef extends BaseLogger {
      Assert.assertEquals("JavaSel-DependInjectn", batchpage.getdropdownText());
     }
 
-    @When("Admin enters {string} in batch name suffix box")
-    public void admin_enters_in_batch_name_suffix_box(String string) {
+    @When("Admin enters in batch name suffix from excel")
+    public void admin_enters_in_batch_name_suffix_from_excel() {
       
     }
+    @When("Admin enters batch name suffix from Excel")
+    public void admin_enters_batch_name_suffix_from_excel() {
 
+        batchpage.enterBatchNameSuffix();
+    }
     @Then("Admin should get error message below the text box of respective field")
     public void admin_should_get_error_message_below_the_text_box_of_respective_field() {
-      
+     Assert.assertEquals(batchpage.ActErrMsgSearchbox(), batchpage.ExpectedErrorMessage()); 
     }
 
     @When("Admin enters alphabets in batch name prefix box")
