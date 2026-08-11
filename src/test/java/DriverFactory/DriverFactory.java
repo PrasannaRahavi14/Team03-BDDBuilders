@@ -6,7 +6,7 @@ import org.openqa.selenium.edge.EdgeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 
 public class DriverFactory {
-	public static ThreadLocal<WebDriver> tlDriver = new ThreadLocal<>();
+	private static ThreadLocal<WebDriver> tlDriver = new ThreadLocal<>();
     private static ThreadLocal<String> tlBrowser = new ThreadLocal<>();
     
 
@@ -26,6 +26,10 @@ public class DriverFactory {
             	break;
             default: throw new IllegalArgumentException("Please specify correct browser: " + browser);
         }
+        System.out.println(
+        	    "STARTING BROWSER = " + browser +
+        	    " | THREAD = " + Thread.currentThread().getId()
+        	);
         getDriver().manage().deleteAllCookies();
         getDriver().manage().window().maximize();
         return getDriver();
