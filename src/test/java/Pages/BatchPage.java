@@ -1,21 +1,22 @@
 package Pages;
 
 import java.util.List;
+import java.util.Map;
 
-import org.apache.poi.ss.formula.atp.Switch;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-
 import DriverFactory.DriverFactory;
 import Utilities.BaseLogger;
 import Utilities.ConfigReader;
 import Utilities.ElementsUtil;
+import Utilities.ExcelReader;
 
 public class BatchPage extends BaseLogger {
 	WebDriver driver = DriverFactory.getDriver();
 	ElementsUtil elementsUtil = new ElementsUtil(driver);
 	String url = ConfigReader.getProperty("baseurl");
+	String filepath = ConfigReader.getProperty("TestData");
 
 	// WebElement
 	private By BatchMenu = By.xpath("//span[contains(text(), 'Batch')]");
@@ -26,9 +27,6 @@ public class BatchPage extends BaseLogger {
 	private	List<WebElement> editIcons = driver.findElements(By.xpath("//tbody/tr//span[contains(@class,'pi-pencil')]"));
 	private List<WebElement> deleteIcons = driver.findElements(By.xpath("//button[contains(@class,'p-button-danger')]"));
 	private List<WebElement> checkBoxes = driver.findElements(By.xpath("//div[@role='checkbox']"));
-	//private By editIcon = By.xpath("//div[@class='cdk-overlay-container']");
-	//private By rowdeleteIcon = By.xpath("//button[@class='p-button-danger p-button p-component p-button-icon-only']");
-	//private By rowCheckbox = By.xpath("//div[@role='checkbox']");
 	private By checkbox = By.xpath("//div[@class='p-hidden-accessible']");
 	private By headerBatchName = By.xpath("//th[@psortablecolumn='batchName']");
 	private By headerBatchDescription = By.xpath("//th[@psortablecolumn='batchDescription']");
@@ -51,8 +49,6 @@ public class BatchPage extends BaseLogger {
 	private By bropdownText = By.xpath("//input[@placeholder='Select or type a program']");
 	private By ProgNameSearchbox = By.xpath("//input[@role = 'searchbox']");
 	private By BatchNameSearchbox = By.xpath("//input[@id='batchName' and @pattern='^[0-9]{0,5}$']");
-	private By DescriptionSearchbox = By.xpath("//input[@class='p-inputtext p-component ng-pristine ng-valid ng-touched']");
-	private By NoOfClassesSearchBox = By.xpath("//input[@class='ng-pristine ng-invalid ng-touched']");
 	private By DBErrorMsg = By.xpath("//small[contains(text(), 'This field accept only numbers and max 5 count.') ]");
 	
 	public BatchPage(WebDriver driver) {
@@ -253,4 +249,45 @@ Thread.sleep(2000);
 
 		    return true;
 		}
+	
+	public void enterBatchNameSuffix() {
+
+		    log.info("Entering Batch Name Suffix with TestData from Excel:");
+
+		    Map<String, String> BatchData =
+		            ExcelReader.getRowByTestCaseId(
+		                    filepath,
+		                    "Batch",
+		                    "Invalid");
+
+		    String ExcelDataSuffix = BatchData.get("suffix");
+
+		    log.info("Batch Name Suffix : " + ExcelDataSuffix);
+
+		    driver.findElement(BatchNameSearchbox).sendKeys(ExcelDataSuffix);
+		}	
+
+	public String ActErrMsgSearchbox() {
+	    String actualErrorMessage =
+	            driver.findElement(DBErrorMsg).getText();
+	    log.info("Actual Error Message : " + actualErrorMessage);
+
+		return actualErrorMessage;		
+	}
+	
+	public String ExpectedErrorMessage() {
+
+	    Map<String, String> BatchData =
+	            ExcelReader.getRowByTestCaseId(
+	                    filepath,
+	                    "Batch",
+	                    "Invalid");
+
+	    String expectedErrorMessage =
+	            BatchData.get("expected message");
+
+	    log.info("Expected Error Message : " + expectedErrorMessage);
+	 return expectedErrorMessage;
+	  
+	}
 }
