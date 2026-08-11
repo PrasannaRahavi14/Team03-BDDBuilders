@@ -107,12 +107,6 @@ public class ProgramStepDef extends BaseLogger {
       log.info("Sort Icon is Present : "+ isSortIconDisplayed);
 	}
 
-	@Then("Admin should see the Edit and Delete buttons on each row of the data table")
-	public void admin_should_see_the_edit_and_delete_buttons_on_each_row_of_the_data_table() {
-	    
-	    
-	}
-	
 	@Then("Admin should see the following pagination controls below the table:")
 	public void admin_should_see_the_following_pagination_controls(DataTable dataTable) {
 	    List<String> ExpectedControls = dataTable.asList(String.class);
@@ -201,14 +195,10 @@ public class ProgramStepDef extends BaseLogger {
 	}
 
 	@Then("Admin gets message {string} is required")
-	public void admin_gets_message_is_required(String actualText) { 
-//		boolean isDisplayed = programpage.isRequiredMessageDisplayed(FieldMessage);
-//	    Assert.assertTrue(isDisplayed, "Radio button not displayed: " + FieldMessage);
-//	    log.info("Mandatory required message is displayed for : " + FieldMessage);
-		String actualMessage = programpage.isRequiredMessageDisplayed(actualText);
-	    Assert.assertEquals(actualMessage.trim(), actualText,
-	        "Mandatory message mismatch. Expected: [" + actualText + "] but found: [" + actualMessage + "]");
-	    log.info("Mandatory required message is displayed for : " + actualText);
+	public void admin_gets_message_is_required(String FieldMessage) { 
+		boolean isDisplayed = programpage.isRequiredMessageDisplayed(FieldMessage);
+	    Assert.assertTrue(isDisplayed, "Radio button not displayed: " + FieldMessage);
+	    log.info("Mandatory required message is displayed for : " + FieldMessage);	
 	}
 
 	@When("Admin clicks Cancel button")
@@ -248,13 +238,16 @@ public class ProgramStepDef extends BaseLogger {
 	@When("Admin enters a numeric value as the Program Name")
 	public void admin_enters_a_numeric_value_as_the_program_name() {
 	    
-	    
+	    programpage.getInValidProgramDetails();
 	}
 
 	@Then("Admin should see error message as {string}")
-	public void admin_should_see_error_message_as(String string) {
+	public void admin_should_see_error_message_as(String ExpectedErrorMessage) {
+		String ActualErrorMessage = programpage.isErrorProgramMessageDisplay();
+		Assert.assertEquals(ExpectedErrorMessage, ActualErrorMessage);
+	    log.info("Admin can see the message as: " + ActualErrorMessage);
 	    
-	    
-	}
+	}	
+	
+	
 }
-
