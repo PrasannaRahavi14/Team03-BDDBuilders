@@ -62,9 +62,14 @@ public class ProgramPage extends BaseLogger {
 	 private By CancelButton = By.xpath("//span[contains(text(), 'Cancel')]");
 	 private By XIcon = By.xpath("//span[contains(@class,'p-dialog-header-close-icon') and contains(@class,'pi-times')]");
 	 String filepath = ConfigReader.getProperty("TestData");
-	 private By Successprogrammessage = By.xpath("//div[contains(., 'Program Created Successfully')]");//By.xpath("//div[contains(text(), 'Program Created Successfully')]");
+	 private By Successprogrammessage = By.xpath("//div[contains(text(), 'Program Created Successfully')]");
 	 private By ActiveButton = By.xpath("//p-radiobutton[@ng-reflect-input-id = 'Active']");
-	 
+	 private By ErrorMessage = By.xpath("//small[contains(text(), 'This field should start with an alphabet, no special char other than a hyphen and have min 4 char.')]");
+	 private By SearchInput = By.xpath("//input[@class = 'p-inputtext p-component']");
+	 private By ProgramRowFilter = By.xpath("//tbody[contains(@class,'p-datatable-tbody')]//tr[contains(@class,'ng-star-inserted')]");
+	 private By ProgramNameRow = By.xpath("//tbody[contains(@class,'p-datatable-tbody')]//tr[contains(@class,'ng-star-inserted')]//td[2]");
+	 private By ProgramDescriptionRow = By.xpath("//tbody[contains(@class,'p-datatable-tbody')]//tr[contains(@class,'ng-star-inserted')]//td[3]");
+	 private By ProgramStatusRow = By.xpath("//tbody[contains(@class,'p-datatable-tbody')]//tr[contains(@class,'ng-star-inserted')]//td[4]");
 	 
 	 public ProgramPage(WebDriver driver) {
 	        this.driver = driver;
@@ -188,7 +193,7 @@ public class ProgramPage extends BaseLogger {
 		 
 		 List<WebElement> ProgramStausIcon = elementsUtil.waitForElementsToBeVisible(ProgramStatusSortIcon);
 		 boolean isProgramStatusIconPresent = ProgramStatusSortIcon != null && !ProgramStausIcon.isEmpty();
-		 log.info("Sort icon besdie Program Status is present: {}", isProgramStatusIconPresent);
+		 log.info("Sort icon beside Program Status is present: {}", isProgramStatusIconPresent);
 		 
          return isProgramNameIconPresent && isProgramDescriptionIconPresent && isProgramStatusIconPresent;       
 	 }	 
@@ -341,20 +346,12 @@ public class ProgramPage extends BaseLogger {
 	      }
 		}
 		
-//		public boolean isRequiredMessageDisplayed(String fieldmessage) {
-//		    By locator = isMandatoryRequiredMessageDisplay(fieldmessage);
-//		   // boolean isDisplayed = elementsUtil.isElementDisplayed(locator);
-//		   // log.info("Admin is able to see : " + fieldmessage + " is displayed: " + isDisplayed);
-//		    log.info("Admin is able to see : " + fieldmessage + " "+ isDisplayed);
-//		    return isDisplayed;
-//		}
-		
-		public String isRequiredMessageDisplayed(String fieldmessage)
-		{ 
-			By locator = isMandatoryRequiredMessageDisplay(fieldmessage);
-		    String actualText = elementsUtil.doGetText(locator);
-		    log.info("Admin is able to see : " + fieldmessage + " -> " + actualText);
-		    return actualText;
+		public boolean isRequiredMessageDisplayed(String fieldmessage) {
+		    By locator = isMandatoryRequiredMessageDisplay(fieldmessage);
+		    boolean isDisplayed = elementsUtil.isElementDisplayed(locator);
+		    log.info("Admin is able to see : " + fieldmessage + " is displayed: " + isDisplayed);
+		    log.info("Admin is able to see : " + fieldmessage + " "+ isDisplayed);
+		    return isDisplayed;
 		}
 		
 		public void OnClickCancelButton()
@@ -388,13 +385,65 @@ public class ProgramPage extends BaseLogger {
 		
 		public String isSuccessProgramMessageDisplay()
 		{
-			//return elementsUtil.waitForVisibilityAndGetText(Successprogrammessage);
 			return elementsUtil.doGetText(Successprogrammessage);
 		}
+		
+		public void getInValidProgramDetails()
+		{
+			log.info("Performing AddNewProgram with TestData from Excel:");
+	     	Map<String, String> ProgramData = ExcelReader.getRowByTestCaseId(filepath, "AddNewProgram", "InvalidProgramDetails");
+	     	String ExcelDataName = ProgramData.get("Name");
+	     	driver.findElement(NameTextBox).sendKeys(ExcelDataName);
+	     	log.info("Name : " + ExcelDataName);
+		}
+		
+		public String isErrorProgramMessageDisplay()
+		{
+			return elementsUtil.doGetText(ErrorMessage);
+		}
 
+		public void searchProgramByTestCaseId(String TestCaseID) {
+		    log.info("Performing Search with TestData from Excel: " + TestCaseID);
+		    Map<String, String> SearchData = ExcelReader.getRowByTestCaseId(filepath, "ManageProgramSearch", TestCaseID);
+		    String ExcelSearchValue = SearchData.get("SearchValue");
+
+		    if (ExcelSearchValue == null) {
+		        throw new IllegalStateException("SearchValue is null for TestCaseID: " + TestCaseID);
+		    }
+
+		    driver.findElement(SearchInput).sendKeys(ExcelSearchValue);
+		    log.info("Search Value : " + ExcelSearchValue);
+		}
+
+		public Map<String, String> getSearchedProgramDetails() {
+		    WebElement row = elementsUtil.waitForElementToBeVisible(ProgramRowFilter);//driver.findElement(ProgramRowFilter);
+		    String name = row.findElement(ProgramNameRow).getText();
+		    String description = row.findElement(ProgramDescriptionRow).getText();
+		    String status = row.findElement(ProgramStatusRow).getText();
+
+		    Map<String, String> details = new HashMap<>();
+		    details.put("Name", name);
+		    details.put("Description", description);
+		    details.put("Status", status);
+		    return details;
+		}
+		
+		public boolean isSearchedProgramDetailsValid() {
+		    Map<String, String> details = getSearchedProgramDetails();
+
+		    boolean isValid = !details.get("Name").isEmpty()
+		            && !details.get("Description").isEmpty()
+		            && !details.get("Status").isEmpty();
+
+		    log.info("Search result — Name: " + details.get("Name")
+		            + ", Description: " + details.get("Description")
+		            + ", Status: " + details.get("Status"));
+
+		    return isValid;
+		}
+		
+		
 }
-	 
-	 
 	 
 
 

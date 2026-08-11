@@ -51,10 +51,6 @@ Then Admin should see checkbox default state as unchecked beside Program Name co
 Scenario:
 Then Admin should see the sort arrow icon beside to each column header except Edit and Delete
 
-#@Edit/DeleteIcon
-#Scenario:
-#Then Admin should see the Edit and Delete buttons on each row of the data table
-
 @PaginationControl
 Scenario:
 Then Admin should see the following pagination controls below the table:
@@ -68,4 +64,9 @@ Then Admin should see the following pagination controls below the table:
 @FooterMessage
 Scenario:
 Then Admin should see the footer as "In total there are z programs"
+
+
+
+
+
  
